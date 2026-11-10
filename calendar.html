@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь традиционных праздников Школы №1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; }
+
+        :root {
+            --bg-gradient-start: #f9f7f3;
+            --bg-gradient-end: #e8e3db;
+            --container-bg: rgba(255, 255, 255, 0.85);
+            --container-border: rgba(255, 245, 235, 0.6);
+            --container-shadow: rgba(0, 0, 0, 0.25);
+            --container-inset: rgba(255, 255, 255, 0.7);
+            --title-color: #2e3b4e;
+            --title-shadow: rgba(255, 215, 150, 0.3);
+            --badge-bg: #2e3b4e;
+            --badge-color: #f9e6c2;
+            --subhead-color: #5a6b7c;
+            --card-bg: #fffcf7;
+            --card-border: #eadbc9;
+            --card-shadow: rgba(110, 80, 50, 0.12);
+            --card-inset: #f0e7db;
+            --card-hover-shadow: rgba(110, 80, 50, 0.2);
+            --card-hover-inset: #e5d5c0;
+            --card-active-bg: #fffbf5;
+            --card-active-border: #b2885c;
+            --card-active-shadow: rgba(178, 136, 92, 0.33);
+            --card-active-inset: #dbbd9a;
+            --month-name-color: #3a4b5e;
+            --month-header-border: #e8d9c8;
+            --weekday-color: #9b8c7c;
+            --weekend-color: #d32f2f;
+            --day-color: #3a4b5e;
+            --holiday-number-color: #c62828;
+            --day-today-bg: #f0e7db;
+            --day-today-color: #b2885c;
+            --day-today-inset: #dbbd9a;
+            --holiday-grad-start: #ffe9c7;
+            --holiday-grad-end: #ffd8a0;
+            --holiday-color: #7a4a1a;
+            --holiday-shadow: rgba(210, 160, 100, 0.35);
+            --holiday-hover-shadow: rgba(200, 140, 70, 0.55);
+            --tooltip-bg: #2e3b4e;
+            --tooltip-color: #f9e6c2;
+            --tooltip-arrow: #2e3b4e;
+            --panel-bg: #f5efe8;
+            --panel-border: #e2d2bf;
+            --panel-shadow: rgba(160, 120, 80, 0.08);
+            --panel-text: #3a4b5e;
+            --badge-month-bg: #b2885c;
+            --badge-month-color: #fef9f0;
+            --badge-month-shadow: rgba(178, 136, 92, 0.6);
+            --theme-btn-bg: #f0e7db;
+            --theme-btn-color: #3a4b5e;
+            --theme-btn-border: #dbbd9a;
+            --theme-btn-hover-bg: #e5d5c0;
+            --year-btn-bg: #f0e7db;
+            --year-btn-color: #3a4b5e;
+            --year-btn-border: #dbbd9a;
+            --year-btn-hover-bg: #e5d5c0;
+            --year-btn-active-bg: #b2885c;
+            --year-btn-active-color: #fef9f0;
+            --year-btn-active-border: #b2885c;
+            --search-bg: #fffcf7;
+            --search-border: #dbbd9a;
+            --search-text: #3a4b5e;
+            --search-placeholder: #9b8c7c;
+            --search-btn-bg: #b2885c;
+            --search-btn-color: #fef9f0;
+            --search-btn-hover: #9a7448;
+            --modal-desc-color: #4a3b2a;
+            --modal-desc-bg: #fdf6ec;
+            --modal-desc-border: #e8d9c8;
+            --cat-btn-bg: #f0e7db;
+            --cat-btn-color: #3a4b5e;
+            --cat-btn-border: #dbbd9a;
+            --cat-btn-hover: #e5d5c0;
+            --cat-btn-active-school: #2e7d32;
+            --cat-btn-active-school-text: #fff;
+            --cat-btn-active-allrussian: #1565c0;
+            --cat-btn-active-allrussian-text: #fff;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient-start: #1b1f28;
+            --bg-gradient-end: #0e1219;
+            --container-bg: rgba(30, 36, 47, 0.88);
+            --container-border: rgba(80, 90, 110, 0.4);
+            --container-shadow: rgba(0, 0, 0, 0.6);
+            --container-inset: rgba(255, 255, 255, 0.05);
+            --title-color: #e8e0d2;
+            --title-shadow: rgba(210, 160, 100, 0.25);
+            --badge-bg: #c9a26b;
+            --badge-color: #1e242f;
+            --subhead-color: #a8b3c1;
+            --card-bg: #252c38;
+            --card-border: #3a4454;
+            --card-shadow: rgba(0, 0, 0, 0.4);
+            --card-inset: #323b4a;
+            --card-hover-shadow: rgba(0, 0, 0, 0.6);
+            --card-hover-inset: #3d4859;
+            --card-active-bg: #2b3443;
+            --card-active-border: #c9a26b;
+            --card-active-shadow: rgba(201, 162, 107, 0.3);
+            --card-active-inset: #c9a26b;
+            --month-name-color: #e8e0d2;
+            --month-header-border: #3a4454;
+            --weekday-color: #7d8a9c;
+            --weekend-color: #ff6b6b;
+            --day-color: #cfd8e3;
+            --holiday-number-color: #ff5252;
+            --day-today-bg: #3a4454;
+            --day-today-color: #e6b96e;
+            --day-today-inset: #c9a26b;
+            --holiday-grad-start: #5a4526;
+            --holiday-grad-end: #7a5c2e;
+            --holiday-color: #ffe4b0;
+            --holiday-shadow: rgba(210, 160, 100, 0.25);
+            --holiday-hover-shadow: rgba(210, 160, 100, 0.5);
+            --tooltip-bg: #e8e0d2;
+            --tooltip-color: #1e242f;
+            --tooltip-arrow: #e8e0d2;
+            --panel-bg: #252c38;
+            --panel-border: #3a4454;
+            --panel-shadow: rgba(0, 0, 0, 0.3);
+            --panel-text: #cfd8e3;
+            --badge-month-bg: #c9a26b;
+            --badge-month-color: #1e242f;
+            --badge-month-shadow: rgba(201, 162, 107, 0.5);
+            --theme-btn-bg: #323b4a;
+            --theme-btn-color: #e8e0d2;
+            --theme-btn-border: #4a5464;
+            --theme-btn-hover-bg: #3d4859;
+            --year-btn-bg: #323b4a;
+            --year-btn-color: #e8e0d2;
+            --year-btn-border: #4a5464;
+            --year-btn-hover-bg: #3d4859;
+            --year-btn-active-bg: #c9a26b;
+            --year-btn-active-color: #1e242f;
+            --year-btn-active-border: #c9a26b;
+            --search-bg: #252c38;
+            --search-border: #4a5464;
+            --search-text: #cfd8e3;
+            --search-placeholder: #7d8a9c;
+            --search-btn-bg: #c9a26b;
+            --search-btn-color: #1e242f;
+            --search-btn-hover: #b88a2a;
+            --modal-desc-color: #e8e0d2;
+            --modal-desc-bg: #2b3443;
+            --modal-desc-border: #4a5464;
+            --cat-btn-bg: #323b4a;
+            --cat-btn-color: #e8e0d2;
+            --cat-btn-border: #4a5464;
+            --cat-btn-hover: #3d4859;
+            --cat-btn-active-school: #2e7d32;
+            --cat-btn-active-school-text: #fff;
+            --cat-btn-active-allrussian: #1565c0;
+            --cat-btn-active-allrussian-text: #fff;
+        }
+
+        body {
+            background: linear-gradient(145deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 30px 20px;
+            transition: background 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        .calendar-container {
+            max-width: 1300px;
+            width: 100%;
+            background: var(--container-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 56px;
+            padding: 32px 30px 40px;
+            box-shadow: 0 25px 50px -8px var(--container-shadow), 0 0 0 1px var(--container-inset) inset;
+            border: 1px solid var(--container-border);
+            transition: background 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .top-controls {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .control-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--theme-btn-bg);
+            color: var(--theme-btn-color);
+            border: 1px solid var(--theme-btn-border);
+            border-radius: 40px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .control-btn:hover { background: var(--theme-btn-hover-bg); transform: translateY(-2px); }
+        .control-btn:active { transform: scale(0.96); }
+        .control-btn .icon { font-size: 1.15rem; line-height: 1; transition: transform 0.4s ease; }
+        .control-btn:hover .icon { transform: rotate(20deg); }
+
+        .logo-img {
+            position: absolute;
+            top: 32px;
+            left: 30px;
+            width: 240px;
+            height: 240px;
+            object-fit: contain;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            background: #fff;
+            padding: 4px;
+            border: 1px solid var(--card-border);
+            z-index: 10;
+        }
+
+        .header-text-wrapper {
+            padding-left: 270px;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--title-color);
+            text-shadow: 4px 4px 12px var(--title-shadow);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            transition: color 0.4s ease, text-shadow 0.4s ease;
+            line-height: 1.2;
+        }
+
+        h1 span {
+            background: var(--badge-bg);
+            color: var(--badge-color);
+            font-size: 1.2rem;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        .subhead {
+            font-size: 1.05rem;
+            color: var(--subhead-color);
+            font-style: italic;
+            transition: color 0.4s ease;
+            margin-bottom: 0;
+        }
+
+        .category-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 0 auto 10px;
+            flex-wrap: wrap;
+        }
+
+        .cat-btn {
+            background: var(--cat-btn-bg);
+            color: var(--cat-btn-color);
+            border: 2px solid var(--cat-btn-border);
+            border-radius: 40px;
+            padding: 8px 22px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .cat-btn:hover { background: var(--cat-btn-hover); transform: translateY(-1px); }
+
+        .cat-btn.active-school {
+            background: var(--cat-btn-active-school);
+            color: var(--cat-btn-active-school-text);
+            border-color: var(--cat-btn-active-school);
+            box-shadow: 0 4px 12px -2px var(--cat-btn-active-school);
+        }
+
+        .cat-btn.active-allrussian {
+            background: var(--cat-btn-active-allrussian);
+            color: var(--cat-btn-active-allrussian-text);
+            border-color: var(--cat-btn-active-allrussian);
+            box-shadow: 0 4px 12px -2px var(--cat-btn-active-allrussian);
+        }
+
+        .search-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 10px auto 6px;
+            max-width: 600px;
+            gap: 10px;
+            padding: 0 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 40px;
+            border: 2px solid var(--search-border);
+            background: var(--search-bg);
+            color: var(--search-text);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.4s ease;
+        }
+
+        .search-input::placeholder {
+            color: var(--search-placeholder);
+            font-style: italic;
+        }
+
+        .search-input:focus {
+            border-color: var(--search-btn-bg);
+            box-shadow: 0 0 0 4px rgba(178, 136, 92, 0.2);
+        }
+
+        .search-btn {
+            background: var(--search-btn-bg);
+            color: var(--search-btn-color);
+            border: none;
+            border-radius: 40px;
+            padding: 12px 26px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.25s ease, transform 0.15s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            white-space: nowrap;
+        }
+
+        .search-btn:hover { background: var(--search-btn-hover); transform: translateY(-2px); }
+        .search-btn:active { transform: scale(0.96); }
+
+        .search-error {
+            text-align: center;
+            color: #d32f2f;
+            font-size: 0.9rem;
+            font-weight: 600;
+            min-height: 22px;
+            margin-bottom: 4px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .search-error.show { opacity: 1; }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
+
+        .stat-badge {
+            background: var(--fav-counter-bg, #fff3e4);
+            color: var(--fav-counter-color, #5b4a37);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px dashed var(--fav-counter-border, #dbbd9a);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .year-switcher {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 4px auto 12px;
+            flex-wrap: wrap;
+        }
+
+        .year-label {
+            font-size: 1rem;
+            color: var(--subhead-color);
+            font-weight: 500;
+            margin-right: 6px;
+            transition: color 0.4s ease;
+        }
+
+        .year-btn {
+            background: var(--year-btn-bg);
+            color: var(--year-btn-color);
+            border: 1px solid var(--year-btn-border);
+            border-radius: 40px;
+            padding: 6px 18px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .year-btn:hover { background: var(--year-btn-hover-bg); transform: translateY(-1px); }
+        .year-btn.active {
+            background: var(--year-btn-active-bg);
+            color: var(--year-btn-active-color);
+            border-color: var(--year-btn-active-border);
+            box-shadow: 0 4px 12px -2px var(--year-btn-active-border);
+        }
+
+        .months-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .month-card {
+            background: var(--card-bg);
+            border-radius: 32px;
+            padding: 22px 18px 18px;
+            box-shadow: 0 12px 24px -8px var(--card-shadow), 0 0 0 1px var(--card-inset) inset;
+            transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.4s ease, border-color 0.4s ease;
+            cursor: pointer;
+            border: 1px solid var(--card-border);
+            display: flex;
+            flex-direction: column;
+            animation: fadeSlide 0.5s ease backwards;
+        }
+
+        .month-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 32px -10px var(--card-hover-shadow), 0 0 0 2px var(--card-hover-inset) inset;
+        }
+
+        .month-card.active {
+            border: 2px solid var(--card-active-border);
+            background: var(--card-active-bg);
+            box-shadow: 0 18px 28px -12px var(--card-active-shadow), 0 0 0 2px var(--card-active-inset) inset;
+        }
+
+        .month-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 8px;
+            border-bottom: 2px solid var(--month-header-border);
+            transition: border-color 0.4s ease;
+        }
+
+        .month-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--month-name-color);
+            letter-spacing: 0.5px;
+            transition: color 0.4s ease;
+        }
+
+        .month-icon { font-size: 1.6rem; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)); }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 6px;
+            padding: 0 2px;
+        }
+
+        .weekday {
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--weekday-color);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding: 2px 0;
+            transition: color 0.4s ease;
+        }
+
+        .weekday.weekend { color: var(--weekend-color); }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            padding: 0 2px;
+            flex: 1;
+        }
+
+        .day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--day-color);
+            transition: all 0.15s, color 0.4s ease;
+            position: relative;
+            cursor: default;
+            min-width: 28px;
+        }
+
+        .day.empty { cursor: default; opacity: 0; }
+
+        .day.today {
+            background: var(--day-today-bg);
+            font-weight: 700;
+            color: var(--day-today-color);
+            box-shadow: 0 0 0 2px var(--day-today-inset) inset;
+        }
+
+        .day.holiday {
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--holiday-grad-start), var(--holiday-grad-end));
+            color: var(--holiday-number-color);
+            font-weight: 700;
+            box-shadow: 0 2px 8px var(--holiday-shadow);
+            animation: pulseGlow 2s infinite alternate;
+            transition: all 0.3s ease;
+        }
+
+        .day.holiday:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 14px var(--holiday-hover-shadow);
+            z-index: 2;
+        }
+
+        .day.holiday.dimmed {
+            opacity: 0.25;
+            filter: grayscale(0.8);
+            box-shadow: none;
+            animation: none;
+            transform: none;
+        }
+
+        .day.holiday.dimmed:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .day.holiday.search-highlight {
+            animation: searchPulse 0.6s ease-in-out 4 alternate !important;
+            z-index: 10;
+            box-shadow: 0 0 0 4px #ff9800, 0 0 25px 5px #ff9800 !important;
+            transform: scale(1.3) !important;
+        }
+
+        .day.holiday .tooltip {
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: var(--tooltip-bg);
+            color: var(--tooltip-color);
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.18s ease;
+            z-index: 10;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+            letter-spacing: 0.2px;
+        }
+
+        .day.holiday .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--tooltip-arrow);
+        }
+
+        .day.holiday:hover .tooltip { opacity: 1; transform: translateX(-50%) scale(1); }
+
+        .info-panel {
+            background: var(--panel-bg);
+            border-radius: 48px;
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+            margin-top: 12px;
+            border: 1px solid var(--panel-border);
+            box-shadow: 0 6px 16px var(--panel-shadow);
+            transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .selected-month-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 1.1rem;
+            color: var(--panel-text);
+            font-weight: 500;
+            flex-wrap: wrap;
+            transition: color 0.4s ease;
+        }
+
+        .badge-month {
+            background: var(--badge-month-bg);
+            color: var(--badge-month-color);
+            padding: 6px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-size: 1.1rem;
+            box-shadow: 0 6px 12px -4px var(--badge-month-shadow);
+            transition: background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .countdown-panel {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--card-active-bg);
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: var(--panel-text);
+            font-weight: 500;
+            border: 1px solid var(--card-active-border);
+            font-size: 1rem;
+        }
+        
+        .countdown-panel .num {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--holiday-number-color);
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 2px 8px var(--holiday-shadow); }
+            100% { box-shadow: 0 2px 14px var(--holiday-hover-shadow); }
+        }
+
+        @keyframes searchPulse {
+            0% { transform: scale(1.1); box-shadow: 0 0 0 4px #ff9800; background: linear-gradient(135deg, var(--holiday-grad-start), var(--holiday-grad-end)); }
+            100% { transform: scale(1.35); box-shadow: 0 0 0 8px #ffb74d, 0 0 35px 10px #ff9800; background: #ffeb3b; color: #000; }
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .modal-overlay.show { opacity: 1; visibility: visible; }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 32px;
+            padding: 24px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            transform: scale(0.7);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+            border: 1px solid var(--card-border);
+        }
+
+        .modal-overlay.show .modal-content { transform: scale(1); opacity: 1; }
+
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--month-name-color);
+            cursor: pointer;
+            line-height: 1;
+            transition: transform 0.2s, color 0.2s;
+            z-index: 10;
+        }
+
+        .modal-close:hover { transform: scale(1.2); color: #d32f2f; }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--month-name-color);
+            margin-bottom: 16px;
+            text-align: center;
+            padding-right: 30px;
+            border-bottom: 2px dashed var(--month-header-border);
+            padding-bottom: 12px;
+        }
+
+        .modal-description {
+            background: var(--modal-desc-bg);
+            color: var(--modal-desc-color);
+            border: 1px solid var(--modal-desc-border);
+            border-radius: 16px;
+            padding: 20px 24px;
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+            transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+        }
+
+        /* ===== НОВЫЕ СТИЛИ ДЛЯ ФОТОГРАФИЙ В РАМКЕ ===== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            /* Используем картинку-рамку как фон */
+            background-image: url('frame.png'); 
+            background-size: 100% 100%; /* Рамка растягивается по размеру блока */
+            background-repeat: no-repeat;
+            background-color: transparent;
+            
+            /* Размеры блока подгоняем под пропорции фото */
+            width: 100%;
+            aspect-ratio: 3 / 4; /* Пропорции как у вертикальной фотографии */
+            
+            /* Внутренние отступы, чтобы фото не залезало на рисунки по краям */
+            padding: 12% 10%; 
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03) rotate(1deg);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Картинка заполняет внутреннюю область */
+            border-radius: 4px; /* Легкое скругление самого фото */
+            display: block;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Легкая тень для объема фото */
+        }
+
+        /* ===== ОБЛОЖКА КНИГИ ===== */
+        .book-cover-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .book-cover-overlay.show { opacity: 1; visibility: visible; }
+
+        .book-cover {
+            width: 320px;
+            height: 420px;
+            background: linear-gradient(135deg, #6a1b9a, #4a148c);
+            border-radius: 10px 20px 20px 10px;
+            box-shadow: 15px 15px 30px rgba(0,0,0,0.6), inset -4px 0 10px rgba(0,0,0,0.3);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-left: 15px solid #3e0f5c;
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            overflow: hidden;
+        }
+
+        .book-cover-overlay.show .book-cover { transform: scale(1); }
+        .book-cover:hover { transform: scale(1.05) rotate(-2deg); }
+
+        .book-cover.opening {
+            transform: scale(1.5) rotateY(90deg) !important;
+            opacity: 0 !important;
+            transition: transform 0.6s ease-in, opacity 0.5s ease-in 0.1s !important;
+        }
+
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            top: 20px; left: 20px; right: 20px; bottom: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            border-radius: 5px;
+            pointer-events: none;
+        }
+
+        .book-cover-title { color: #ffd700; font-size: 2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; z-index: 2; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); padding: 0 20px; line-height: 1.2; }
+        .book-cover-subtitle { color: #e1bee7; font-size: 1.2rem; margin-top: 10px; font-style: italic; z-index: 2; }
+        .book-cover-emoji { font-size: 5rem; margin-bottom: 20px; z-index: 2; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); }
+        .book-hint { position: absolute; bottom: 20px; color: rgba(255,255,255,0.7); font-size: 0.9rem; animation: bounce 2s infinite; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @media (max-width: 900px) {
+            .logo-img { position: static; margin: 0 auto 16px; display: block; width: 180px; height: 180px; }
+            .header-text-wrapper { padding-left: 0; min-height: auto; text-align: center; align-items: center; }
+            h1 { justify-content: center; font-size: 2rem; }
+        }
+
+        @media (max-width: 700px) {
+            .calendar-container { padding: 22px 16px 28px; border-radius: 36px; }
+            .months-grid { grid-template-columns: 1fr; }
+            .info-panel { flex-direction: column; align-items: flex-start; padding: 18px 22px; }
+            .month-name { font-size: 1.3rem; }
+            .day { font-size: 0.75rem; min-width: 24px; }
+            .top-controls { top: 16px; right: 16px; }
+            .control-btn { padding: 6px 12px; font-size: 0.8rem; }
+            .gallery-grid { grid-template-columns: 1fr; gap: 15px; }
+            .modal-content { padding: 16px; }
+            .countdown-panel { width: 100%; justify-content: center; }
+            .search-wrapper { flex-direction: column; }
+            .search-btn { width: 100%; }
+            .cat-btn { padding: 6px 16px; font-size: 0.85rem; }
+            h1 { font-size: 1.6rem; }
+            .logo-img { width: 150px; height: 150px; }
+            .modal-description { font-size: 1.1rem; padding: 16px 18px; }
+        }
+
+        @media (max-width: 420px) {
+            .day { font-size: 0.68rem; min-width: 20px; }
+            .weekday { font-size: 0.6rem; }
+            .months-grid { gap: 16px; }
+            .control-btn .label { display: none; }
+            .year-btn { padding: 5px 12px; font-size: 0.85rem; }
+            .book-cover { width: 260px; height: 340px; }
+            .book-cover-title { font-size: 1.5rem; }
+            .book-cover-emoji { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+<!-- ... ОСТАЛЬНОЙ HTML БЕЗ ИЗМЕНЕНИЙ ... -->
+<div class="calendar-container">
+    <div class="top-controls">
+        <button class="control-btn" id="themeToggle" aria-label="Переключить тему">
+            <span class="icon" id="themeIcon">🌙</span>
+            <span class="label" id="themeLabel">Тёмная</span>
+        </button>
+    </div>
+
+    <img src="logo.png" alt="Логотип школы" class="logo-img">
+
+    <div class="header-text-wrapper">
+        <h1>
+            Календарь праздников
+            <span>Школа №1</span>
+        </h1>
+        <div class="subhead" id="subhead">Нажми на праздничный день</div>
+    </div>
+
+    <div class="category-switcher" id="categorySwitcher">
+        <button class="cat-btn" data-cat="school">🏫 Школьные праздники</button>
+        <button class="cat-btn" data-cat="allrussian">🇷🇺 Всероссийские праздники</button>
+    </div>
+
+    <div class="search-wrapper">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Введите название праздника..." autocomplete="off">
+        <button id="searchBtn" class="search-btn">Найти</button>
+    </div>
+    <div class="search-error" id="searchError"></div>
+    
+    <div class="header-stats">
+        <div class="stat-badge">🎉 Всего праздников: <span id="totalHolidaysCount">0</span></div>
+    </div>
+
+    <div class="year-switcher" id="yearSwitcher">
+        <span class="year-label">Учебный год:</span>
+    </div>
+
+    <div class="months-grid" id="monthsGrid"></div>
+
+    <div class="info-panel">
+        <div class="selected-month-info">
+            <span>📅 Текущий месяц:</span>
+            <span class="badge-month" id="selectedMonthBadge">Сентябрь</span>
+        </div>
+        
+        <div class="countdown-panel" id="countdownPanel">
+            ⏳ До ближайшего: <span id="countdownText">...</span>
+        </div>
+    </div>
+</div>
+
+<!-- ОКНО-ОБЛОЖКА КНИГИ -->
+<div class="book-cover-overlay" id="bookCoverOverlay">
+    <div class="book-cover" id="bookCover">
+        <div class="book-cover-emoji" id="bookCoverEmoji">🎒</div>
+        <div class="book-cover-title" id="bookCoverTitle">День знаний</div>
+        <div class="book-cover-subtitle">1 Сентября</div>
+        <div class="book-hint">Нажми, чтобы открыть</div>
+    </div>
+</div>
+
+<!-- ОСНОВНОЕ ОКНО С ФОТО И ТЕКСТОМ -->
+<div class="modal-overlay" id="photoModal">
+    <div class="modal-content">
+        <button class="modal-close" id="modalClose" aria-label="Закрыть">&times;</button>
+        <h2 class="modal-title" id="modalTitle">День знаний</h2>
+        <div class="modal-description" id="modalDescription"></div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+</div>
+
+<script>
+    // ... (Весь JavaScript код остаётся без изменений) ...
+    (function() {
+        let audioCtx = null;
+        function playClickSound() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } catch (e) { }
+        }
+
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeLabel = document.getElementById('themeLabel');
+        const htmlElement = document.documentElement;
+
+        function getInitialTheme() {
+            const saved = localStorage.getItem('schoolCalendarTheme');
+            if (saved === 'light' || saved === 'dark') return saved;
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+            return 'light';
+        }
+
+        function applyTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            if (theme === 'dark') { themeIcon.textContent = '☀️'; themeLabel.textContent = 'Светлая'; }
+            else { themeIcon.textContent = '🌙'; themeLabel.textContent = 'Тёмная'; }
+        }
+
+        function toggleTheme() {
+            const current = htmlElement.getAttribute('data-theme') || 'light';
+            const next = current === 'light' ? 'dark' : 'light';
+            applyTheme(next);
+            localStorage.setItem('schoolCalendarTheme', next);
+        }
+
+        applyTheme(getInitialTheme());
+        themeToggle.addEventListener('click', toggleTheme);
+
+        const holidaysByMonthNumber = {
+            9: {
+                1:  { 
+                    id: 'sep1', name: 'День знаний', emoji: '🎒', hasGallery: true,
+                    categories: ['school', 'allrussian'],
+                    description: 'В этот день школа вновь впускает к себе учеников. Ученики, учителя и родители собираются в актовом зале, в котором директор встретит их своей пламенной речью, и девочки исполняют для них школьную песню, которая возвращает их в школу. Также один из мальчиков-старшеклассников поднимает на свои плечи ученика 1 класса, который прозвенит звоночек.'
+                }
+            },
+            10: {
+                5: { id: 'oct1', name: 'День учителя', emoji: '🍎', categories: ['school'] }
+            },
+            11: {
+                4: { id: 'nov1', name: 'День народного единства', emoji: '🇷🇺', categories: ['allrussian'] }
+            },
+            12: {
+                25: { id: 'dec1', name: 'Новогодний утренник', emoji: '🎄', categories: ['school'] }
+            },
+            1: {
+                7: { id: 'jan1', name: 'Рождество Христово', emoji: '🕯️', categories: ['allrussian'] }
+            },
+            2: {
+                23: { id: 'feb1', name: 'День защитника Отечества', emoji: '🎖️', categories: ['allrussian'] }
+            },
+            3: {
+                8: { id: 'mar1', name: 'Международный женский день', emoji: '🌷', categories: ['allrussian'] }
+            },
+            5: {
+                1: { id: 'may1', name: 'Праздник Весны и Труда', emoji: '🌸', categories: ['allrussian'] },
+                9: { id: 'may2', name: 'День Победы', emoji: '🎗️', categories: ['allrussian'] },
+                25: { id: 'may3', name: 'Последний звонок', emoji: '🔔', categories: ['school'] }
+            }
+        };
+
+        const monthOrder = [
+            { name: 'Сентябрь', monthNum: 9,  icon: '🍁' },
+            { name: 'Октябрь',  monthNum: 10, icon: '🎃' },
+            { name: 'Ноябрь',   monthNum: 11, icon: '🦃' },
+            { name: 'Декабрь',  monthNum: 12, icon: '🎄' },
+            { name: 'Январь',   monthNum: 1,  icon: '❄️' },
+            { name: 'Февраль',  monthNum: 2,  icon: '💘' },
+            { name: 'Март',     monthNum: 3,  icon: '🌷' },
+            { name: 'Апрель',   monthNum: 4,  icon: '🌧️' },
+            { name: 'Май',      monthNum: 5,  icon: '🌼' }
+        ];
+
+        const weekdayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+        const WEEKEND_INDICES = [5, 6];
+
+        function getCurrentAcademicYearStart() {
+            const now = new Date();
+            const currentMonth = now.getMonth() + 1;
+            const currentYear = now.getFullYear();
+            if (currentMonth >= 9) return currentYear;
+            return currentYear - 1;
+        }
+
+        const startYear = getCurrentAcademicYearStart();
+        const AVAILABLE_YEARS = [startYear, startYear + 1, startYear + 2, startYear + 3];
+        
+        let currentYearStart = startYear;
+        let selectedMonth = 'Сентябрь';
+        let activeCategory = null;
+
+        const monthsGrid = document.getElementById('monthsGrid');
+        const selectedMonthBadge = document.getElementById('selectedMonthBadge');
+        const totalHolidaysCountSpan = document.getElementById('totalHolidaysCount');
+        const yearSwitcher = document.getElementById('yearSwitcher');
+        const subhead = document.getElementById('subhead');
+        const countdownText = document.getElementById('countdownText');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchError = document.getElementById('searchError');
+        const categorySwitcher = document.getElementById('categorySwitcher');
+
+        const bookCoverOverlay = document.getElementById('bookCoverOverlay');
+        const bookCover = document.getElementById('bookCover');
+        const bookCoverTitle = document.getElementById('bookCoverTitle');
+        const bookCoverEmoji = document.getElementById('bookCoverEmoji');
+
+        const photoModal = document.getElementById('photoModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const galleryGrid = document.getElementById('galleryGrid');
+        const galleryPhotos = ['photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg'];
+
+        function isLeapYear(year) { return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0); }
+        function daysInMonth(year, monthNum) {
+            if (monthNum === 2) return isLeapYear(year) ? 29 : 28;
+            if ([4, 6, 9, 11].includes(monthNum)) return 30;
+            return 31;
+        }
+        function getFirstWeekday(year, monthNum) {
+            const jsDay = new Date(year, monthNum - 1, 1).getDay();
+            return (jsDay + 6) % 7;
+        }
+        function getRealYear(monthNum) {
+            if (monthNum >= 9) return currentYearStart;
+            return currentYearStart + 1;
+        }
+
+        function updateCountdown() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            let nextHoliday = null;
+            let minDiff = Infinity;
+            let isToday = false;
+
+            monthOrder.forEach(mInfo => {
+                const year = getRealYear(mInfo.monthNum);
+                const monthHolidays = holidaysByMonthNumber[mInfo.monthNum] || {};
+                for (const dayStr in monthHolidays) {
+                    const day = parseInt(dayStr);
+                    const hDate = new Date(year, mInfo.monthNum - 1, day);
+                    hDate.setHours(0, 0, 0, 0);
+                    
+                    const diff = hDate - today;
+                    if (diff >= 0 && diff < minDiff) {
+                        minDiff = diff;
+                        nextHoliday = { name: monthHolidays[day].name, date: hDate };
+                        isToday = (diff === 0);
+                    }
+                }
+            });
+
+            if (nextHoliday) {
+                if (isToday) {
+                    countdownText.innerHTML = `🎉 Сегодня <b>${nextHoliday.name}</b>!`;
+                } else {
+                    const days = Math.ceil(minDiff / (1000 * 60 * 60 * 24));
+                    countdownText.innerHTML = `<b>${days}</b> дн. до <b>${nextHoliday.name}</b>`;
+                }
+            } else {
+                countdownText.textContent = "Все праздники в этом году прошли";
+            }
+        }
+
+        function applyCategoryFilter() {
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('active-school', 'active-allrussian');
+                if (btn.dataset.cat === activeCategory) {
+                    if (activeCategory === 'school') btn.classList.add('active-school');
+                    if (activeCategory === 'allrussian') btn.classList.add('active-allrussian');
+                }
+            });
+
+            document.querySelectorAll('.day.holiday').forEach(dayEl => {
+                const holidayCategories = JSON.parse(dayEl.dataset.categories || '[]');
+                
+                if (activeCategory === null) {
+                    dayEl.classList.remove('dimmed');
+                } else {
+                    if (holidayCategories.includes(activeCategory)) {
+                        dayEl.classList.remove('dimmed');
+                    } else {
+                        dayEl.classList.add('dimmed');
+                    }
+                }
+            });
+        }
+
+        categorySwitcher.addEventListener('click', (e) => {
+            const btn = e.target.closest('.cat-btn');
+            if (!btn) return;
+
+            const cat = btn.dataset.cat;
+
+            if (activeCategory === cat) {
+                activeCategory = null;
+            } else {
+                activeCategory = cat;
+            }
+
+            applyCategoryFilter();
+            playClickSound();
+        });
+
+        function performSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            searchError.classList.remove('show');
+            searchError.textContent = '';
+
+            if (!query) {
+                searchError.textContent = 'Пожалуйста, введите название праздника.';
+                searchError.classList.add('show');
+                return;
+            }
+
+            document.querySelectorAll('.day.holiday.search-highlight').forEach(el => {
+                el.classList.remove('search-highlight');
+            });
+
+            let found = false;
+
+            const monthCards = document.querySelectorAll('.month-card');
+            for (const card of monthCards) {
+                const holidayDays = card.querySelectorAll('.day.holiday');
+                for (const dayEl of holidayDays) {
+                    const tooltipEl = dayEl.querySelector('.tooltip');
+                    if (tooltipEl) {
+                        const holidayText = tooltipEl.textContent.toLowerCase();
+                        if (holidayText.includes(query)) {
+                            found = true;
+                            
+                            dayEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            
+                            setTimeout(() => {
+                                dayEl.classList.add('search-highlight');
+                                playClickSound();
+                            }, 400);
+
+                            setTimeout(() => {
+                                dayEl.classList.remove('search-highlight');
+                            }, 3500);
+
+                            document.querySelectorAll('.month-card').forEach(c => c.classList.remove('active'));
+                            card.classList.add('active');
+                            selectedMonth = card.dataset.month;
+                            selectedMonthBadge.textContent = selectedMonth;
+
+                            break;
+                        }
+                    }
+                }
+                if (found) break;
+            }
+
+            if (!found) {
+                searchError.textContent = 'Праздник не найден. Попробуйте другое название.';
+                searchError.classList.add('show');
+            }
+        }
+
+        searchBtn.addEventListener('click', performSearch);
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+
+        function openBook(holiday) {
+            bookCoverTitle.textContent = holiday.name;
+            bookCoverEmoji.textContent = holiday.emoji;
+            
+            bookCover.classList.remove('opening');
+            bookCoverOverlay.classList.add('show');
+            
+            bookCover.onclick = () => {
+                bookCover.classList.add('opening');
+                
+                setTimeout(() => {
+                    bookCoverOverlay.classList.remove('show');
+                    openGallery(holiday);
+                    
+                    setTimeout(() => {
+                        bookCover.classList.remove('opening');
+                    }, 100);
+                }, 600);
+            };
+        }
+
+        function openGallery(holiday) {
+            modalTitle.textContent = `${holiday.emoji} ${holiday.name}`;
+            
+            if (holiday.description) {
+                modalDescription.textContent = holiday.description;
+                modalDescription.style.display = 'block';
+            } else {
+                modalDescription.style.display = 'none';
+            }
+
+            galleryGrid.innerHTML = '';
+            galleryPhotos.forEach(src => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Фото с праздника';
+                img.onerror = function() {
+                    this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="%23e0e0e0"/><text x="50%" y="50%" font-family="sans-serif" font-size="14" fill="%23888" text-anchor="middle" dominant-baseline="middle">Фото не найдено</text></svg>';
+                };
+                item.appendChild(img);
+                galleryGrid.appendChild(item);
+            });
+            photoModal.classList.add('show');
+        }
+
+        function closeGallery() { photoModal.classList.remove('show'); }
+
+        modalClose.addEventListener('click', closeGallery);
+        photoModal.addEventListener('click', (e) => { if (e.target === photoModal) closeGallery(); });
+        document.addEventListener('keydown', (e) => { 
+            if (e.key === 'Escape') {
+                if (photoModal.classList.contains('show')) closeGallery();
+                if (bookCoverOverlay.classList.contains('show')) {
+                    bookCoverOverlay.classList.remove('show');
+                    bookCover.classList.remove('opening');
+                }
+            }
+        });
+
+        function countAllHolidays() {
+            let count = 0;
+            for (const m in holidaysByMonthNumber) {
+                count += Object.keys(holidaysByMonthNumber[m]).length;
+            }
+            totalHolidaysCountSpan.textContent = count;
+        }
+
+        function renderMonth(monthInfo) {
+            const { name, monthNum, icon } = monthInfo;
+            const year = getRealYear(monthNum);
+            const totalDays = daysInMonth(year, monthNum);
+            const startDay = getFirstWeekday(year, monthNum);
+
+            const monthCard = document.createElement('div');
+            monthCard.className = `month-card ${name === selectedMonth ? 'active' : ''}`;
+            monthCard.dataset.month = name;
+
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'month-header';
+            headerDiv.innerHTML = `
+                <span class="month-name">${name} <small style="font-size:0.75rem;font-weight:400;opacity:0.7;">${year}</small></span>
+                <span class="month-icon">${icon}</span>
+            `;
+
+            const weekdaysDiv = document.createElement('div');
+            weekdaysDiv.className = 'weekdays';
+            weekdayNames.forEach((wd, idx) => {
+                const wdSpan = document.createElement('span');
+                wdSpan.className = 'weekday';
+                if (WEEKEND_INDICES.includes(idx)) wdSpan.classList.add('weekend');
+                wdSpan.textContent = wd;
+                weekdaysDiv.appendChild(wdSpan);
+            });
+
+            const daysGrid = document.createElement('div');
+            daysGrid.className = 'days-grid';
+
+            for (let i = 0; i < startDay; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'day empty';
+                daysGrid.appendChild(emptyCell);
+            }
+
+            const monthHolidays = holidaysByMonthNumber[monthNum] || {};
+
+            for (let d = 1; d <= totalDays; d++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'day';
+                dayDiv.textContent = d;
+
+                const today = new Date();
+                if (today.getFullYear() === year && (today.getMonth() + 1) === monthNum && today.getDate() === d) {
+                    dayDiv.classList.add('today');
+                }
+
+                const holiday = monthHolidays[d];
+                if (holiday) {
+                    dayDiv.classList.add('holiday');
+                    dayDiv.dataset.categories = JSON.stringify(holiday.categories || []);
+
+                    const tooltip = document.createElement('span');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = `${holiday.emoji} ${holiday.name}`;
+                    dayDiv.appendChild(tooltip);
+
+                    dayDiv.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        
+                        if (holiday.hasGallery) {
+                            openBook(holiday);
+                        }
+
+                        document.querySelectorAll('.month-card').forEach(c => c.classList.remove('active'));
+                        monthCard.classList.add('active');
+                        selectedMonth = name;
+                        selectedMonthBadge.textContent = name;
+                    });
+                }
+
+                daysGrid.appendChild(dayDiv);
+            }
+
+            monthCard.appendChild(headerDiv);
+            monthCard.appendChild(weekdaysDiv);
+            monthCard.appendChild(daysGrid);
+
+            monthCard.addEventListener('click', (e) => {
+                if (e.target.closest('.day.holiday')) return;
+                document.querySelectorAll('.month-card').forEach(c => c.classList.remove('active'));
+                monthCard.classList.add('active');
+                selectedMonth = name;
+                selectedMonthBadge.textContent = name;
+            });
+
+            return monthCard;
+        }
+
+        function renderCalendar() {
+            monthsGrid.innerHTML = '';
+            monthOrder.forEach(monthInfo => {
+                monthsGrid.appendChild(renderMonth(monthInfo));
+            });
+            applyCategoryFilter();
+        }
+
+        function renderYearSwitcher() {
+            yearSwitcher.querySelectorAll('.year-btn').forEach(b => b.remove());
+
+            AVAILABLE_YEARS.forEach(year => {
+                const btn = document.createElement('button');
+                btn.className = 'year-btn' + (year === currentYearStart ? ' active' : '');
+                btn.textContent = `${year}–${year + 1}`;
+                btn.dataset.year = year;
+                btn.addEventListener('click', () => {
+                    if (currentYearStart === year) return;
+                    currentYearStart = year;
+                    renderYearSwitcher();
+                    renderCalendar();
+                    updateSubhead();
+                    updateCountdown();
+                    searchError.classList.remove('show');
+                    searchInput.value = '';
+                });
+                yearSwitcher.appendChild(btn);
+            });
+        }
+
+        function updateSubhead() {
+            subhead.textContent = `Учебный год ${currentYearStart}–${currentYearStart + 1} · Нажми на праздничный день`;
+        }
+
+        function init() {
+            renderYearSwitcher();
+            renderCalendar();
+            updateSubhead();
+            countAllHolidays();
+            updateCountdown();
+            selectedMonthBadge.textContent = 'Сентябрь';
+        }
+
+        init();
+    })();
+</script>
+</body>
+</html>
